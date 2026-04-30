@@ -1,0 +1,42 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+name: CI
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install WASM toolchain
+        run: |
+          rustup target add wasm32-wasip2
+
+      - name: Build extension
+        run: |
+          cargo build --target wasm32-wasip2
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: rustfmt check
+        run: |
+          cargo fmt --check
+
+      - name: run clippy
+        run: |
+          cargo clippy --all-targets --all-features -- -D warnings

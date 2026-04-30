@@ -1,0 +1,17 @@
+id = "zizmor"
+name = "zizmor for Zed"
+version = "0.0.1"
+schema_version = 1
+authors = ["William Woodruff <william@yossarian.net>"]
+description = "A Zed extension for zizmor's LSP"
+repository = "https://github.com/zizmorcore/zizmor-zed"
+
+[language_servers.zizmor-lsp]
+name = "zizmor LSP"
+# NOTE(ww): I'm pretty sure this is the right way to declare compatibility with the "GitHub Actions"
+# extension as well, which declares its own "GitHub Actions" language.
+languages = ["GitHub Actions", "YAML"]
+
+[language_servers.zizmor-lsp.language_ids]
+"GitHub Actions" = "yaml"
+"YAML" = "yaml"
